@@ -1,0 +1,588 @@
+version: "2"
+type: frontend
+tech_stack:
+  - JavaScript
+  - React 19
+  - Vite 7
+  - Tailwind CSS 4
+  - MUI (Material UI) 7
+  - Chart.js 4.5 + react-chartjs-2 5.3
+  - Recharts 3.4
+  - react-hook-form 7.66
+  - react-router-dom 7.9
+  - Axios 1.13
+  - react-toastify 11
+  - Lucide React
+routes:
+  - path: /grapadistrategix/
+    file: src/pages/LandingPage.jsx
+    auth_required: false
+    description: Public landing page with hero, features, pricing, testimonials
+  - path: /grapadistrategix/features
+    file: src/pages/FeaturesPage.jsx
+    auth_required: false
+    description: Features showcase page
+  - path: /grapadistrategix/pricing
+    file: src/pages/PricingPage.jsx
+    auth_required: false
+    description: Pricing comparison page (Free vs Pro)
+  - path: /grapadistrategix/faq
+    file: src/pages/FAQ.jsx
+    auth_required: false
+    description: FAQ page with accordion
+  - path: /grapadistrategix/terms
+    file: src/pages/Terms.jsx
+    auth_required: false
+    description: Terms and conditions page
+  - path: /grapadistrategix/login
+    file: src/pages/Login.jsx
+    auth_required: false
+    description: Login page with username and password
+  - path: /grapadistrategix/register
+    file: src/pages/Register.jsx
+    auth_required: false
+    description: Registration page with name, username, phone, password
+  - path: /grapadistrategix/verify-otp
+    file: src/pages/OtpVerification.jsx
+    auth_required: false
+    description: OTP verification page, 6-digit code via WhatsApp
+  - path: /grapadistrategix/forgot-password
+    file: src/pages/ForgotPassword.jsx
+    auth_required: false
+    description: Forgot password page, enter phone to get OTP
+  - path: /grapadistrategix/reset-password
+    file: src/pages/ResetPassword.jsx
+    auth_required: false
+    description: Reset password with OTP and new password
+  - path: /grapadistrategix/dashboard
+    file: src/pages/Dashboard.jsx
+    auth_required: true
+    description: Main dashboard with state-based navigation for all modules
+  - path: /grapadistrategix/payment/success
+    file: src/pages/PaymentSuccess.jsx
+    auth_required: false
+    description: Payment success callback page
+  - path: /grapadistrategix/affiliate/:slug
+    file: src/pages/LandingPage.jsx
+    auth_required: false
+    description: Affiliate link redirect for tracking
+features:
+  - name: User Login
+    description: Login with username and password to access the dashboard
+    files:
+      - src/pages/Login.jsx
+      - src/services/authApi.js
+      - src/contexts/AuthContext.jsx
+    entry_route: /grapadistrategix/login
+    user_interactions:
+      - Fill username field (e.g., pandu123)
+      - Fill password field
+      - Click Login button
+      - See error message on invalid credentials
+      - Redirect to /grapadistrategix/dashboard on success
+    api_calls:
+      - method: POST
+        endpoint: /api/login
+    auth_required: false
+  - name: User Registration
+    description: Register new account with name, username, phone, password
+    files:
+      - src/pages/Register.jsx
+      - src/services/authApi.js
+    entry_route: /grapadistrategix/register
+    user_interactions:
+      - Fill name field
+      - Fill username field
+      - Fill phone/WhatsApp field (628xxx format)
+      - Fill password field
+      - Fill confirm password field
+      - Optionally enter referral code
+      - Click register button
+      - See validation errors if fields invalid
+      - Redirect to OTP verification on success
+    api_calls:
+      - method: POST
+        endpoint: /api/register
+    auth_required: false
+  - name: OTP Verification
+    description: Verify phone number via WhatsApp OTP code
+    files:
+      - src/pages/OtpVerification.jsx
+      - src/services/authApi.js
+    entry_route: /grapadistrategix/verify-otp
+    user_interactions:
+      - Enter 6-digit OTP code
+      - Click verify button
+      - Click resend OTP button
+    api_calls:
+      - method: POST
+        endpoint: /api/verify-otp
+      - method: POST
+        endpoint: /api/resend-otp
+    auth_required: false
+  - name: Forgot Password
+    description: Request password reset OTP via WhatsApp
+    files:
+      - src/pages/ForgotPassword.jsx
+      - src/services/authApi.js
+    entry_route: /grapadistrategix/forgot-password
+    user_interactions:
+      - Enter phone number
+      - Click Send OTP button
+      - See success or error message
+    api_calls:
+      - method: POST
+        endpoint: /api/forgot-password
+    auth_required: false
+  - name: Reset Password
+    description: Reset password with OTP and new password
+    files:
+      - src/pages/ResetPassword.jsx
+      - src/services/authApi.js
+    entry_route: /grapadistrategix/reset-password
+    user_interactions:
+      - Enter OTP code
+      - Enter new password
+      - Enter confirm password
+      - Click submit button
+    api_calls:
+      - method: POST
+        endpoint: /api/verify-reset-otp
+      - method: POST
+        endpoint: /api/reset-password
+    auth_required: false
+  - name: Dashboard Overview
+    description: Main dashboard showing business overview stats, quick actions, and recent plans
+    files:
+      - src/pages/Dashboard.jsx
+      - src/components/Dashboard/StatCards.jsx
+      - src/components/Dashboard/QuickActions.jsx
+      - src/components/Dashboard/RecentPlans.jsx
+    entry_route: /grapadistrategix/dashboard
+    user_interactions:
+      - View stat cards with module summaries
+      - Click quick action cards to navigate to modules
+      - View recent plans list
+      - Click sidebar items to switch sections
+    api_calls:
+      - method: GET
+        endpoint: /api/me
+      - method: GET
+        endpoint: /api/business-background
+    auth_required: true
+  - name: Business Background CRUD
+    description: Create, read, update, delete business background entries with fields like name, category, description, vision, mission
+    files:
+      - src/components/BusinessPlan/BusinessBackground/
+      - src/services/businessPlan/backgroundApi.js
+    entry_route: /grapadistrategix/dashboard
+    user_interactions:
+      - Click Business Background in sidebar or quick actions
+      - View list of business backgrounds
+      - Click Tambah (Add) button to create new
+      - Fill business name, category, description, and other fields
+      - Upload logo, background image, org chart image
+      - Click Save button
+      - Click Edit to modify existing
+      - Click Delete to remove
+    api_calls:
+      - method: GET
+        endpoint: /api/business-background
+      - method: POST
+        endpoint: /api/business-background
+      - method: PUT
+        endpoint: /api/business-background/{id}
+      - method: DELETE
+        endpoint: /api/business-background/{id}
+    auth_required: true
+  - name: Market Analysis CRUD
+    description: Create, read, update, delete market analysis with TAM/SAM/SOM, SWOT, and competitor data
+    files:
+      - src/components/BusinessPlan/MarketAnalysis/
+      - src/services/businessPlan/marketAnalysisApi.js
+    entry_route: /grapadistrategix/dashboard
+    user_interactions:
+      - Click Market Analysis in sidebar
+      - View list of market analyses
+      - Click Tambah to create new
+      - Fill target market, market size, trends, SWOT fields
+      - Add competitors
+      - View pie chart and bar chart
+      - Click Save
+      - Edit or delete existing
+    api_calls:
+      - method: GET
+        endpoint: /api/market-analysis
+      - method: POST
+        endpoint: /api/market-analysis
+      - method: PUT
+        endpoint: /api/market-analysis/{id}
+      - method: DELETE
+        endpoint: /api/market-analysis/{id}
+      - method: POST
+        endpoint: /api/market-analysis/calculate-market-size
+    auth_required: true
+  - name: Product Service CRUD
+    description: Create, read, update, delete products and services with BMC alignment
+    files:
+      - src/components/BusinessPlan/ProductService/
+      - src/services/businessPlan/productServiceApi.js
+    entry_route: /grapadistrategix/dashboard
+    user_interactions:
+      - Click Product Service in sidebar
+      - View products/services list
+      - Click Tambah to add new
+      - Select type (product or service)
+      - Fill name, description, price
+      - Upload product image
+      - Generate BMC alignment
+      - Save, edit, or delete
+    api_calls:
+      - method: GET
+        endpoint: /api/product-service
+      - method: POST
+        endpoint: /api/product-service
+      - method: PUT
+        endpoint: /api/product-service/{id}
+      - method: DELETE
+        endpoint: /api/product-service/{id}
+    auth_required: true
+  - name: Marketing Strategy CRUD
+    description: Create, read, update, delete marketing strategies
+    files:
+      - src/components/BusinessPlan/MarketingStrategy/
+      - src/services/businessPlan/marketingStrategyApi.js
+    entry_route: /grapadistrategix/dashboard
+    user_interactions:
+      - Click Marketing Strategy in sidebar
+      - View list
+      - Click Tambah to add new
+      - Fill promotion strategy, media, pricing strategy, monthly target
+      - Save, edit, or delete
+    api_calls:
+      - method: GET
+        endpoint: /api/marketing-strategy
+      - method: POST
+        endpoint: /api/marketing-strategy
+      - method: PUT
+        endpoint: /api/marketing-strategy/{id}
+      - method: DELETE
+        endpoint: /api/marketing-strategy/{id}
+    auth_required: true
+  - name: Operational Plan CRUD
+    description: Create, read, update, delete operational plans with employees, suppliers, and workflow
+    files:
+      - src/components/BusinessPlan/OperationalPlan/
+      - src/services/businessPlan/operationalPlanApi.js
+    entry_route: /grapadistrategix/dashboard
+    user_interactions:
+      - Click Operational Plan in sidebar
+      - View list
+      - Click Tambah to add new
+      - Fill location details, employees, operational hours, suppliers
+      - Add workflow diagram
+      - Save, edit, or delete
+    api_calls:
+      - method: GET
+        endpoint: /api/operational-plan
+      - method: POST
+        endpoint: /api/operational-plan
+      - method: PUT
+        endpoint: /api/operational-plan/{id}
+      - method: DELETE
+        endpoint: /api/operational-plan/{id}
+    auth_required: true
+  - name: Team Structure CRUD
+    description: Create, read, update, delete team members with salary and org chart
+    files:
+      - src/components/BusinessPlan/TeamStructure/
+      - src/services/businessPlan/teamStructureApi.js
+    entry_route: /grapadistrategix/dashboard
+    user_interactions:
+      - Click Team Structure in sidebar
+      - View team member list and org chart
+      - Click Tambah to add member
+      - Select category (owner, management, supervisor, staff)
+      - Fill name, position, salary, jobdesk
+      - Upload photo
+      - Generate salary estimate
+      - Save, edit, or delete
+    api_calls:
+      - method: GET
+        endpoint: /api/team-structure
+      - method: POST
+        endpoint: /api/team-structure
+      - method: PUT
+        endpoint: /api/team-structure/{id}
+      - method: DELETE
+        endpoint: /api/team-structure/{id}
+      - method: POST
+        endpoint: /api/team-structure/generate-salary
+    auth_required: true
+  - name: Financial Categories
+    description: Manage income and expense categories for financial management
+    files:
+      - src/components/ManagementFinancial/FinancialCategories/
+      - src/services/ManagementFinancial/financialCategoryApi.js
+    entry_route: /grapadistrategix/dashboard
+    user_interactions:
+      - Click Financial Categories in sidebar under Management Financial
+      - View categories list (income/expense/plan)
+      - Click add to create new category
+      - Fill name, type, description
+      - Edit or delete categories
+    api_calls:
+      - method: GET
+        endpoint: /api/management-financial/categories
+      - method: POST
+        endpoint: /api/management-financial/categories
+      - method: PUT
+        endpoint: /api/management-financial/categories/{id}
+      - method: DELETE
+        endpoint: /api/management-financial/categories/{id}
+    auth_required: true
+  - name: Financial Simulation
+    description: Create income/expense transactions and view cash flow summary with charts
+    files:
+      - src/components/ManagementFinancial/FinancialSimulation/
+      - src/services/ManagementFinancial/financialSimulationApi.js
+    entry_route: /grapadistrategix/dashboard
+    user_interactions:
+      - Click Financial Simulation in sidebar
+      - View transaction list and charts
+      - Add new income or expense transaction
+      - Fill category, amount, date, description
+      - Set recurring if needed
+      - View cash flow summary and monthly comparison
+      - Filter by year
+    api_calls:
+      - method: GET
+        endpoint: /api/management-financial/simulations
+      - method: POST
+        endpoint: /api/management-financial/simulations
+      - method: PUT
+        endpoint: /api/management-financial/simulations/{id}
+      - method: DELETE
+        endpoint: /api/management-financial/simulations/{id}
+      - method: GET
+        endpoint: /api/management-financial/simulations/cash-flow-summary
+    auth_required: true
+  - name: Financial Summary
+    description: Monthly financial summaries with P&L, cash flow, and balance sheet
+    files:
+      - src/components/ManagementFinancial/FinancialSummary/
+      - src/services/ManagementFinancial/financialSummaryApi.js
+    entry_route: /grapadistrategix/dashboard
+    user_interactions:
+      - Click Financial Summary in sidebar
+      - View summaries list
+      - Generate summary from simulation data
+      - View monthly comparison charts
+      - Filter by year and month
+      - Delete summaries
+    api_calls:
+      - method: GET
+        endpoint: /api/management-financial/summaries
+      - method: POST
+        endpoint: /api/management-financial/summaries/generate-from-simulations
+      - method: DELETE
+        endpoint: /api/management-financial/summaries/{id}
+    auth_required: true
+  - name: Financial Projections
+    description: Multi-year financial projections with ROI, NPV, IRR calculations
+    files:
+      - src/components/ManagementFinancial/FinancialProjection/
+      - src/services/ManagementFinancial/financialProjectionApi.js
+    entry_route: /grapadistrategix/dashboard
+    user_interactions:
+      - Click Financial Projections in sidebar
+      - View projections list
+      - Create new projection with scenario type
+      - Set growth rate, inflation rate, discount rate
+      - View baseline data
+      - Delete projections
+    api_calls:
+      - method: GET
+        endpoint: /api/management-financial/projections
+      - method: POST
+        endpoint: /api/management-financial/projections
+      - method: GET
+        endpoint: /api/management-financial/projections/baseline
+      - method: DELETE
+        endpoint: /api/management-financial/projections/{id}
+    auth_required: true
+  - name: AI Financial Forecast
+    description: AI-powered financial forecasting with ARIMA algorithm
+    files:
+      - src/pages/Forecast.jsx
+      - src/pages/Forecast-List.jsx
+      - src/pages/Forecast-Results.jsx
+      - src/components/Forecast/
+      - src/services/forecast/forecastApi.js
+    entry_route: /grapadistrategix/dashboard
+    user_interactions:
+      - Click Forecast in sidebar
+      - View forecast data list
+      - Create forecast data (year, income, expenses)
+      - Import data from simulation
+      - Generate AI forecast results
+      - View forecast charts and insights
+      - Export forecast to PDF
+    api_calls:
+      - method: GET
+        endpoint: /api/management-financial/forecast
+      - method: POST
+        endpoint: /api/management-financial/forecast
+      - method: POST
+        endpoint: /api/management-financial/forecast/{id}/generate
+      - method: GET
+        endpoint: /api/management-financial/forecast/{id}/results
+      - method: POST
+        endpoint: /api/management-financial/forecast/import-from-simulation
+    auth_required: true
+  - name: Affiliate System
+    description: Manage affiliate links, track referrals, view commissions, and withdraw earnings
+    files:
+      - src/pages/Affiliate.jsx
+      - src/components/Affiliate/
+      - src/services/Affiliate/affiliateApi.js
+    entry_route: /grapadistrategix/dashboard
+    user_interactions:
+      - Click Affiliate in sidebar
+      - View affiliate link and stats
+      - Edit custom slug
+      - Toggle link active/inactive
+      - View commission statistics and history
+      - Request withdrawal
+      - View withdrawal history
+    api_calls:
+      - method: GET
+        endpoint: /api/affiliate/my-link
+      - method: PUT
+        endpoint: /api/affiliate/slug
+      - method: GET
+        endpoint: /api/affiliate/commissions/statistics
+      - method: POST
+        endpoint: /api/affiliate/withdraw
+    auth_required: true
+  - name: PDF Export
+    description: Export business plan and financial reports as PDF
+    files:
+      - src/pages/ExportPDFLengkap.jsx
+    entry_route: /grapadistrategix/dashboard
+    user_interactions:
+      - Click Export PDF in sidebar
+      - Select export type (Business Plan or Financial Report)
+      - Generate executive summary
+      - Click generate PDF button
+      - Pro payment modal appears for free users
+    api_calls:
+      - method: POST
+        endpoint: /api/pdf-business-plan/generate
+      - method: POST
+        endpoint: /api/management-financial/pdf/generate
+    auth_required: true
+  - name: Pro Subscription Payment
+    description: Purchase Pro subscription for watermark-free PDF exports
+    files:
+      - src/services/singapayApi.js
+    entry_route: /grapadistrategix/dashboard
+    user_interactions:
+      - Click upgrade to Pro
+      - Select package (monthly/yearly)
+      - Choose payment method (VA or QRIS)
+      - Complete payment
+      - See payment success page
+    api_calls:
+      - method: GET
+        endpoint: /api/payment/packages
+      - method: POST
+        endpoint: /api/payment/purchase
+      - method: GET
+        endpoint: /api/payment/status/{transactionCode}
+    auth_required: true
+  - name: User Profile
+    description: View and edit user profile information
+    files:
+      - src/components/UserProfile/ProfileView.jsx
+      - src/components/UserProfile/ProfileEdit.jsx
+      - src/services/userApi.js
+    entry_route: /grapadistrategix/dashboard
+    user_interactions:
+      - Click profile icon in header
+      - View profile info (name, username, phone, role)
+      - Click edit to modify profile
+      - Update name, username, phone
+      - Upload profile photo
+      - Change password
+    api_calls:
+      - method: GET
+        endpoint: /api/me
+      - method: PUT
+        endpoint: /api/me
+    auth_required: true
+  - name: Admin Dashboard
+    description: Admin panel with user statistics, charts, and management
+    files:
+      - src/components/Admin/AdminDashboard.jsx
+      - src/components/Admin/AdminUserManagement.jsx
+      - src/services/admin/adminApi.js
+    entry_route: /grapadistrategix/dashboard
+    user_interactions:
+      - "Login as admin (username: admin, password: admin123)"
+      - View admin stats (total users, active, banned, pro subscribers)
+      - View registration trend chart
+      - Manage users (search, filter, sort)
+      - View user details
+      - Change user status (active/banned/inactive)
+      - Change user role
+      - Update user password
+    api_calls:
+      - method: GET
+        endpoint: /api/admin/dashboard-stats
+      - method: GET
+        endpoint: /api/admin/users
+      - method: PUT
+        endpoint: /api/admin/users/{id}/status
+      - method: PUT
+        endpoint: /api/admin/users/{id}/role
+    auth_required: true
+  - name: Dark Mode Toggle
+    description: Toggle between light and dark theme
+    files:
+      - src/App.jsx
+      - src/components/Layout/Header.jsx
+    entry_route: /grapadistrategix/dashboard
+    user_interactions:
+      - Click sun/moon icon in header
+      - Theme switches between light and dark
+      - Preference persisted in localStorage
+    api_calls: []
+    auth_required: true
+  - name: Public Landing Page
+    description: Public homepage with hero section, features overview, pricing, and testimonials
+    files:
+      - src/pages/LandingPage.jsx
+    entry_route: /grapadistrategix/
+    user_interactions:
+      - View hero section
+      - View feature highlights
+      - View pricing preview
+      - View testimonials
+      - Click Register or Login CTA
+      - Use WhatsApp floating widget
+    api_calls: []
+    auth_required: false
+known_limitations:
+  - issue: Financial Plan module routes are disabled in backend API
+    location: src/components/BusinessPlan/FinancialPlan/
+    impact: 9 frontend components exist but cannot communicate with API
+  - issue: WhatsApp OTP requires valid Fonnte API key
+    location: src/pages/OtpVerification.jsx
+    impact: OTP verification will fail without real API key in dev
+  - issue: SingaPay credentials are placeholders
+    location: src/services/singapayApi.js
+    impact: Pro payment flow non-functional without real keys (use mock mode)
+  - issue: Production base path hardcoded as /grapadistrategix/
+    location: vite.config.js
+    impact: All routes must be prefixed with /grapadistrategix/

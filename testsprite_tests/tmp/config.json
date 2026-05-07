@@ -1,0 +1,20 @@
+{
+  "status": "commited",
+  "type": "frontend",
+  "scope": "codebase",
+  "localEndpoint": "http://localhost:5173/grapadistrategix/",
+  "loginUser": "pandu123",
+  "loginPassword": "password",
+  "executionArgs": {
+    "projectName": "frontend",
+    "projectPath": "/home/raka/dev/GrapadiStrategix/frontend",
+    "testIds": [],
+    "additionalInstruction": "The app uses base path /grapadistrategix/ in production. The login page is at /grapadistrategix/login. Login uses a \"login\" field (username), not phone. Test user credentials: username: pandu123, password: password. Admin credentials: username: admin, password: admin123. UI language is Indonesian (Bahasa Indonesia). Frontend server is on 0.0.0.0:5173, backend API on localhost:8000. All dashboard navigation is state-based (activeSection/activeSubSection), not URL-based routing. Sidebar menu items navigate between Business Plan, Financial Management, Forecast, Affiliate, and Admin sections.",
+    "serverMode": "production",
+    "envs": {
+      "API_KEY": "sk-user-tzSWHgLKNIaIzOXSQBkrRHxxpLDeQwtoErKruWlbmAJC2UOrL2Sxg-kZkiALTJspftf0rQO9na3qacBWMbxmw1bZwfRCdzHteGBFO6zl-K10t2A_wauEZS9l1mHfrHDmWBo"
+    }
+  },
+  "serverPort": 46667,
+  "proxy": "http://11f5a566-54f6-4658-a7f9-b9dffd66d9fd:wKAPYzkcmZ0lOB0Q4T11YWKqyI9ZSF6z@tun.testsprite.com:8080"
+}

@@ -1,0 +1,4545 @@
+[
+  {
+    "id": "TC001",
+    "title": "Validation error for invalid phone/WhatsApp format blocks registration",
+    "description": "Verifies that entering an invalid phone format shows a validation error and prevents redirect to OTP verification.",
+    "category": "User Registration",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/register"
+      },
+      {
+        "type": "action",
+        "description": "Fill \"phone/WhatsApp\" field with \"081234567890\""
+      },
+      {
+        "type": "action",
+        "description": "Fill \"name\" field with \"Test User\""
+      },
+      {
+        "type": "action",
+        "description": "Fill \"username\" field with \"testuser_badphone_003\""
+      },
+      {
+        "type": "action",
+        "description": "Fill \"password\" field with \"Password123!\""
+      },
+      {
+        "type": "action",
+        "description": "Fill \"confirm password\" field with \"Password123!\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Register\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"phone\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC002",
+    "title": "Password and confirm password mismatch shows validation and blocks submission",
+    "description": "Verifies that mismatched passwords trigger a visible validation message and prevent moving forward.",
+    "category": "User Registration",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/register"
+      },
+      {
+        "type": "action",
+        "description": "Fill \"name\" field with \"Test User\""
+      },
+      {
+        "type": "action",
+        "description": "Fill \"username\" field with \"testuser_pw_mismatch_004\""
+      },
+      {
+        "type": "action",
+        "description": "Fill \"phone/WhatsApp\" field with \"6282223334445\""
+      },
+      {
+        "type": "action",
+        "description": "Fill \"password\" field with \"Password123!\""
+      },
+      {
+        "type": "action",
+        "description": "Fill \"confirm password\" field with \"Password123!!\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Register\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"match\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC003",
+    "title": "Required field validation appears when attempting to register with missing name",
+    "description": "Verifies required field validation is displayed when a required field (name) is left blank.",
+    "category": "User Registration",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/register"
+      },
+      {
+        "type": "action",
+        "description": "Fill \"username\" field with \"testuser_noname_005\""
+      },
+      {
+        "type": "action",
+        "description": "Fill \"phone/WhatsApp\" field with \"6283334445556\""
+      },
+      {
+        "type": "action",
+        "description": "Fill \"password\" field with \"Password123!\""
+      },
+      {
+        "type": "action",
+        "description": "Fill \"confirm password\" field with \"Password123!\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Register\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"name\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC004",
+    "title": "Duplicate username shows server-side error and stays on registration page",
+    "description": "Verifies that registering with an already-used username surfaces a visible error and prevents redirect.",
+    "category": "User Registration",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/register"
+      },
+      {
+        "type": "action",
+        "description": "Fill \"name\" field with \"Test User\""
+      },
+      {
+        "type": "action",
+        "description": "Fill \"username\" field with \"existing_user\""
+      },
+      {
+        "type": "action",
+        "description": "Fill \"phone/WhatsApp\" field with \"6286667778889\""
+      },
+      {
+        "type": "action",
+        "description": "Fill \"password\" field with \"Password123!\""
+      },
+      {
+        "type": "action",
+        "description": "Fill \"confirm password\" field with \"Password123!\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Register\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"username\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC005",
+    "title": "Request reset OTP with a registered phone number shows success guidance",
+    "description": "Verifies the forgot password form accepts a valid registered phone number and shows a success message instructing the user to check WhatsApp.",
+    "category": "Forgot Password",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/forgot-password"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify page title contains \"Forgot\""
+      },
+      {
+        "type": "action",
+        "description": "Type \"081234567890\" into the phone number field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Send OTP\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"check WhatsApp\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"OTP\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC006",
+    "title": "Request reset OTP with an unregistered phone number shows phone-not-found error",
+    "description": "Verifies the forgot password form shows an error when the phone number is not found.",
+    "category": "Forgot Password",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/forgot-password"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Send OTP\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Type \"089999000011\" into the phone number field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Send OTP\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"not found\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"phone\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC007",
+    "title": "Submitting with empty phone number shows validation message",
+    "description": "Verifies the form prevents submission when the phone number field is empty and displays a visible validation message.",
+    "category": "Forgot Password",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/forgot-password"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Send OTP\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"required\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"phone\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC008",
+    "title": "Phone number with letters is rejected with a visible validation error",
+    "description": "Verifies the phone number field rejects non-numeric input and shows a visible error message.",
+    "category": "Forgot Password",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/forgot-password"
+      },
+      {
+        "type": "action",
+        "description": "Type \"08ABCD123\" into the phone number field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Send OTP\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"invalid\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"phone\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC009",
+    "title": "Phone number that is too short is rejected with a visible validation error",
+    "description": "Verifies the form prevents submission for an obviously too-short phone number and shows a visible error.",
+    "category": "Forgot Password",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/forgot-password"
+      },
+      {
+        "type": "action",
+        "description": "Type \"0812\" into the phone number field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Send OTP\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"invalid\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC010",
+    "title": "Phone number with leading/trailing spaces still submits and shows success guidance",
+    "description": "Verifies the phone number input tolerates whitespace and still produces a success guidance message after submission.",
+    "category": "Forgot Password",
+    "priority": "Low",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/forgot-password"
+      },
+      {
+        "type": "action",
+        "description": "Type \" 081234567890 \" into the phone number field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Send OTP\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"check WhatsApp\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC011",
+    "title": "Forgot Password page has a visible path to Login",
+    "description": "Verifies users can navigate from the Forgot Password page to the Login page using a visible link or button.",
+    "category": "Forgot Password",
+    "priority": "Low",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/forgot-password"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Login\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" link"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/grapadistrategix/login\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"password\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC012",
+    "title": "Reset password successfully with valid OTP and matching passwords",
+    "description": "Verifies a user can reset their password using a valid OTP and matching new/confirm password fields and sees a success message with a path to login.",
+    "category": "Reset Password",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/reset-password"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Reset Password\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Type \"123456\" into the OTP code field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"NewPassword123!\" into the new password field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"NewPassword123!\" into the confirm password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the submit button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Password reset\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Login\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC013",
+    "title": "Show error for expired or invalid OTP during reset",
+    "description": "Verifies the reset password form shows an invalid/expired OTP error when an unusable OTP is submitted.",
+    "category": "Reset Password",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/reset-password"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Reset Password\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Type \"000000\" into the OTP code field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"NewPassword123!\" into the new password field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"NewPassword123!\" into the confirm password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the submit button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"invalid\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"OTP\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC014",
+    "title": "Prevent submission when confirm password does not match new password",
+    "description": "Verifies the UI blocks reset when new password and confirm password differ and shows a visible validation message.",
+    "category": "Reset Password",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/reset-password"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Reset Password\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Type \"123456\" into the OTP code field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"NewPassword123!\" into the new password field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"DifferentPassword123!\" into the confirm password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the submit button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"match\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"confirm\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC015",
+    "title": "Require OTP code before allowing reset submission",
+    "description": "Verifies the form enforces OTP input and shows a visible error when OTP is missing.",
+    "category": "Reset Password",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/reset-password"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Reset Password\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Type \"NewPassword123!\" into the new password field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"NewPassword123!\" into the confirm password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the submit button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"OTP\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"required\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC016",
+    "title": "Require new password before allowing reset submission",
+    "description": "Verifies the form enforces new password input and shows a visible error when new password is missing.",
+    "category": "Reset Password",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/reset-password"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Reset Password\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Type \"123456\" into the OTP code field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"NewPassword123!\" into the confirm password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the submit button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"new password\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"required\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC017",
+    "title": "Require confirm password before allowing reset submission",
+    "description": "Verifies the form enforces confirm password input and shows a visible error when confirm password is missing.",
+    "category": "Reset Password",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/reset-password"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Reset Password\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Type \"123456\" into the OTP code field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"NewPassword123!\" into the new password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the submit button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"confirm\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"required\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC018",
+    "title": "Navigate to Login from Reset Password page (post-reset call to action present)",
+    "description": "Verifies the Reset Password experience provides a visible way to reach the Login page after a successful reset.",
+    "category": "Reset Password",
+    "priority": "Low",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/reset-password"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Reset Password\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Type \"123456\" into the OTP code field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"NewPassword123!\" into the new password field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"NewPassword123!\" into the confirm password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the submit button"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Login\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/grapadistrategix/login\""
+      }
+    ]
+  },
+  {
+    "id": "TC019",
+    "title": "Open Dashboard and verify overview widgets are visible",
+    "description": "Verifies an authenticated user can load the dashboard and see key overview sections (stat cards, quick actions, recent plans).",
+    "category": "Dashboard Overview",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the username/email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/grapadistrategix/dashboard\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Quick Actions\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Recent Plans\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Stat cards\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC020",
+    "title": "Quick Action: Business Background switches the active section and shows its list",
+    "description": "Verifies clicking the Business Background quick action changes the dashboard section and displays the Business Background list content.",
+    "category": "Dashboard Overview",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the username/email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Business Background\" quick action card"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Business Background\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Business Background list\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Recent Plans\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC021",
+    "title": "Sidebar navigation switches dashboard sections",
+    "description": "Verifies the user can switch sections using the dashboard sidebar and the visible section content updates accordingly.",
+    "category": "Dashboard Overview",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the username/email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Business Background\" in the sidebar menu"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Business Background\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Dashboard\" in the sidebar menu"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Quick Actions\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC022",
+    "title": "Stat cards are present and show summary labels",
+    "description": "Verifies stat cards render on the dashboard and display module summary labels/values in a user-visible way.",
+    "category": "Dashboard Overview",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the username/email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Stat cards\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Business\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Plan\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Forecast\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC023",
+    "title": "Invalid login prevents access to Dashboard",
+    "description": "Verifies that incorrect credentials do not allow entry to the protected dashboard and the user stays on the login page with an error.",
+    "category": "Dashboard Overview",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"fake.user@example.com\" into the username/email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"wrong-password\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/grapadistrategix/login\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify one of the following texts is visible: \"Invalid\", \"Incorrect\", or \"Login failed\""
+      }
+    ]
+  },
+  {
+    "id": "TC024",
+    "title": "Create a new business background with required fields (without file upload)",
+    "description": "Verifies a user can create a business background using required text fields and see it appear in the list.",
+    "category": "Business Background CRUD",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the username/email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the Login/Sign in button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/grapadistrategix/dashboard\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Business Background\" in the sidebar menu"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Tambah\" (Add) button"
+      },
+      {
+        "type": "action",
+        "description": "Type \"Test Business Background A\" into the business name field"
+      },
+      {
+        "type": "action",
+        "description": "Select a category option from the category dropdown"
+      },
+      {
+        "type": "action",
+        "description": "Type \"This is a test description for business background A.\" into the description field"
+      },
+      {
+        "type": "action",
+        "description": "Click the Save button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Test Business Background A\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC025",
+    "title": "Validation errors when saving with required fields empty",
+    "description": "Verifies required-field validation appears when attempting to save an empty Business Background form.",
+    "category": "Business Background CRUD",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the username/email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the Login/Sign in button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/grapadistrategix/dashboard\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Business Background\" in the sidebar menu"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Tambah\" (Add) button"
+      },
+      {
+        "type": "action",
+        "description": "Click the Save button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"required\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify at least one validation error message is visible on the form"
+      }
+    ]
+  },
+  {
+    "id": "TC026",
+    "title": "Cancel add flow does not create a new entry",
+    "description": "Verifies leaving the add form via a Cancel/Back action does not create a new business background.",
+    "category": "Business Background CRUD",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the username/email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the Login/Sign in button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/grapadistrategix/dashboard\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Business Background\" in the sidebar menu"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Tambah\" (Add) button"
+      },
+      {
+        "type": "action",
+        "description": "Type \"Test Business Background Cancel\" into the business name field"
+      },
+      {
+        "type": "action",
+        "description": "Click the Cancel or Back button on the form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Test Business Background Cancel\" is not visible"
+      }
+    ]
+  },
+  {
+    "id": "TC027",
+    "title": "Edit an existing business background and verify updated values in list",
+    "description": "Verifies a user can edit an existing entry and see updated text reflected after saving.",
+    "category": "Business Background CRUD",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the username/email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the Login/Sign in button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/grapadistrategix/dashboard\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Business Background\" in the sidebar menu"
+      },
+      {
+        "type": "action",
+        "description": "If no entries are visible, click the \"Tambah\" (Add) button"
+      },
+      {
+        "type": "action",
+        "description": "If on the add form, type \"Seed Business Background\" into the business name field"
+      },
+      {
+        "type": "action",
+        "description": "If on the add form, select a category option from the category dropdown"
+      },
+      {
+        "type": "action",
+        "description": "If on the add form, type \"Seed description\" into the description field"
+      },
+      {
+        "type": "action",
+        "description": "If on the add form, click the Save button"
+      },
+      {
+        "type": "action",
+        "description": "Click the Edit button for the first visible business background entry"
+      },
+      {
+        "type": "action",
+        "description": "Type \" (Updated)\" at the end of the business name field"
+      },
+      {
+        "type": "action",
+        "description": "Click the Save button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Updated\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC028",
+    "title": "Delete an existing business background and verify it is removed from the list",
+    "description": "Verifies a user can delete an entry and it no longer appears in the list after confirmation.",
+    "category": "Business Background CRUD",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the username/email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the Login/Sign in button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/grapadistrategix/dashboard\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Business Background\" in the sidebar menu"
+      },
+      {
+        "type": "action",
+        "description": "If no entries are visible, click the \"Tambah\" (Add) button"
+      },
+      {
+        "type": "action",
+        "description": "If on the add form, type \"Delete Me Business Background\" into the business name field"
+      },
+      {
+        "type": "action",
+        "description": "If on the add form, select a category option from the category dropdown"
+      },
+      {
+        "type": "action",
+        "description": "If on the add form, type \"This entry will be deleted.\" into the description field"
+      },
+      {
+        "type": "action",
+        "description": "If on the add form, click the Save button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Delete Me Business Background\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Click the Delete button for the \"Delete Me Business Background\" entry"
+      },
+      {
+        "type": "action",
+        "description": "Click the Confirm/Delete button in the confirmation dialog"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Delete Me Business Background\" is not visible"
+      }
+    ]
+  },
+  {
+    "id": "TC029",
+    "title": "View business background list loads and shows empty-state or entries",
+    "description": "Verifies the list page renders correctly and shows either entries or an empty-state message.",
+    "category": "Business Background CRUD",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the username/email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the Login/Sign in button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/grapadistrategix/dashboard\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Business Background\" in the sidebar menu"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the Business Background list section is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the \"Tambah\" (Add) button is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC030",
+    "title": "Prevent save when description is extremely long (field constraint handling)",
+    "description": "Verifies the UI handles overly long description input by showing validation feedback or preventing successful save.",
+    "category": "Business Background CRUD",
+    "priority": "Low",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the username/email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the Login/Sign in button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/grapadistrategix/dashboard\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Business Background\" in the sidebar menu"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Tambah\" (Add) button"
+      },
+      {
+        "type": "action",
+        "description": "Type \"Test Business Background Long Desc\" into the business name field"
+      },
+      {
+        "type": "action",
+        "description": "Select a category option from the category dropdown"
+      },
+      {
+        "type": "action",
+        "description": "Type \"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\" into the description field"
+      },
+      {
+        "type": "action",
+        "description": "Click the Save button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify either a validation error message is visible or the form remains visible"
+      }
+    ]
+  },
+  {
+    "id": "TC031",
+    "title": "Edit flow validation: clearing a required field blocks save",
+    "description": "Verifies required-field validation triggers during edit when a required field is cleared and Save is clicked.",
+    "category": "Business Background CRUD",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the username/email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the Login/Sign in button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/grapadistrategix/dashboard\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Business Background\" in the sidebar menu"
+      },
+      {
+        "type": "action",
+        "description": "If no entries are visible, click the \"Tambah\" (Add) button"
+      },
+      {
+        "type": "action",
+        "description": "If on the add form, type \"Seed For Edit Validation\" into the business name field"
+      },
+      {
+        "type": "action",
+        "description": "If on the add form, select a category option from the category dropdown"
+      },
+      {
+        "type": "action",
+        "description": "If on the add form, type \"Seed\" into the description field"
+      },
+      {
+        "type": "action",
+        "description": "If on the add form, click the Save button"
+      },
+      {
+        "type": "action",
+        "description": "Click the Edit button for the \"Seed For Edit Validation\" entry (or the first visible entry)"
+      },
+      {
+        "type": "action",
+        "description": "Type \"\" into the business name field"
+      },
+      {
+        "type": "action",
+        "description": "Click the Save button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"required\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC032",
+    "title": "Create a new Market Analysis with competitors and verify it appears in list and chart updates",
+    "description": "Verifies a user can create a Market Analysis with TAM/SAM/SOM and competitor entries, then see it in the list and see the pie chart reflect the added data.",
+    "category": "Market Analysis CRUD",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the username/email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the Login button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/grapadistrategix/dashboard\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Market Analysis\" in the sidebar"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Market Analysis\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Click \"Tambah\" to create a new market analysis"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Target Market\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Type \"UMKM kuliner di Jakarta\" into the Target Market field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"1000000000\" into the TAM field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"400000000\" into the SAM field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"150000000\" into the SOM field"
+      },
+      {
+        "type": "action",
+        "description": "Click \"Add Competitor\" (or equivalent add competitor button)"
+      },
+      {
+        "type": "action",
+        "description": "Type \"Kompetitor A\" into the first competitor name field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"40\" into the first competitor market share field"
+      },
+      {
+        "type": "action",
+        "description": "Click \"Add Competitor\" (or equivalent add competitor button)"
+      },
+      {
+        "type": "action",
+        "description": "Type \"Kompetitor B\" into the second competitor name field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"25\" into the second competitor market share field"
+      },
+      {
+        "type": "action",
+        "description": "Click \"Save\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"UMKM kuliner di Jakarta\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"pie chart\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC033",
+    "title": "Validate inconsistent TAM/SAM/SOM using Calculate Market Size shows an error message",
+    "description": "Verifies market size validation triggers when TAM/SAM/SOM values are inconsistent and the user attempts to calculate market size.",
+    "category": "Market Analysis CRUD",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the username/email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the Login button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/grapadistrategix/dashboard\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Market Analysis\" in the sidebar"
+      },
+      {
+        "type": "action",
+        "description": "Click \"Tambah\" to create a new market analysis"
+      },
+      {
+        "type": "action",
+        "description": "Type \"Pasar fesyen online\" into the Target Market field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"100000\" into the TAM field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"200000\" into the SAM field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"300000\" into the SOM field"
+      },
+      {
+        "type": "action",
+        "description": "Click \"Calculate Market Size\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"TAM\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"SAM\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"SOM\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"inconsistent\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC034",
+    "title": "Read existing Market Analysis list and verify charts are visible",
+    "description": "Verifies a user can open Market Analysis module, view the list of saved analyses, and see chart components rendered.",
+    "category": "Market Analysis CRUD",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the username/email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the Login button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/grapadistrategix/dashboard\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Market Analysis\" in the sidebar"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"market analyses list\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"pie chart\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"bar chart\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC035",
+    "title": "Edit an existing Market Analysis and verify updates are reflected",
+    "description": "Verifies a user can edit an existing Market Analysis, save changes, and see updated values displayed.",
+    "category": "Market Analysis CRUD",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the username/email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the Login button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/grapadistrategix/dashboard\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Market Analysis\" in the sidebar"
+      },
+      {
+        "type": "action",
+        "description": "Click \"Edit\" on the first market analysis in the list"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Target Market\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Type \" (Revisi)\" into the Target Market field"
+      },
+      {
+        "type": "action",
+        "description": "Click \"Save\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Revisi\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC036",
+    "title": "Delete an existing Market Analysis and verify it is removed from the list",
+    "description": "Verifies a user can delete a Market Analysis and it no longer appears in the list afterward.",
+    "category": "Market Analysis CRUD",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the username/email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the Login button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/grapadistrategix/dashboard\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Market Analysis\" in the sidebar"
+      },
+      {
+        "type": "action",
+        "description": "Click \"Delete\" on the first market analysis in the list"
+      },
+      {
+        "type": "action",
+        "description": "Click \"Confirm\" in the delete confirmation prompt"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Deleted\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC037",
+    "title": "Required field validation: attempt to save without Target Market shows visible validation",
+    "description": "Verifies the form prevents saving when required fields (Target Market) are missing and shows a visible validation message.",
+    "category": "Market Analysis CRUD",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the username/email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the Login button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/grapadistrategix/dashboard\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Market Analysis\" in the sidebar"
+      },
+      {
+        "type": "action",
+        "description": "Click \"Tambah\" to create a new market analysis"
+      },
+      {
+        "type": "action",
+        "description": "Click \"Save\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Target Market\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"required\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC038",
+    "title": "Competitor entry validation: prevent saving when competitor share is non-numeric",
+    "description": "Verifies competitor market share input enforces numeric validation and shows a visible error for non-numeric values.",
+    "category": "Market Analysis CRUD",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the username/email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the Login button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/grapadistrategix/dashboard\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Market Analysis\" in the sidebar"
+      },
+      {
+        "type": "action",
+        "description": "Click \"Tambah\" to create a new market analysis"
+      },
+      {
+        "type": "action",
+        "description": "Type \"Pasar alat tulis\" into the Target Market field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"5000000\" into the TAM field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"2500000\" into the SAM field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"1000000\" into the SOM field"
+      },
+      {
+        "type": "action",
+        "description": "Click \"Add Competitor\" (or equivalent add competitor button)"
+      },
+      {
+        "type": "action",
+        "description": "Type \"Kompetitor X\" into the competitor name field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"abc\" into the competitor market share field"
+      },
+      {
+        "type": "action",
+        "description": "Click \"Save\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"market share\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"number\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC039",
+    "title": "SWOT fields can be filled and saved, then are visible when editing",
+    "description": "Verifies SWOT inputs can be saved and persist by checking they are visible again when opening the edit view.",
+    "category": "Market Analysis CRUD",
+    "priority": "Low",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the username/email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the Login button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/grapadistrategix/dashboard\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Market Analysis\" in the sidebar"
+      },
+      {
+        "type": "action",
+        "description": "Click \"Tambah\" to create a new market analysis"
+      },
+      {
+        "type": "action",
+        "description": "Type \"Pasar laundry rumahan\" into the Target Market field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"Kekuatan: lokasi strategis\" into the Strengths field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"Kelemahan: modal terbatas\" into the Weaknesses field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"Peluang: permintaan meningkat\" into the Opportunities field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"Ancaman: pesaing baru\" into the Threats field"
+      },
+      {
+        "type": "action",
+        "description": "Click \"Save\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Edit\" on the market analysis with target market \"Pasar laundry rumahan\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Kekuatan: lokasi strategis\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC040",
+    "title": "Add a new Product with required fields (no image) and verify it appears in the list",
+    "description": "Verifies a user can add a new product with name, description, and price, then see it listed.",
+    "category": "Product & Service CRUD",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the username/email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/grapadistrategix/dashboard\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Product Service\" in the sidebar"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Tambah\" button"
+      },
+      {
+        "type": "action",
+        "description": "Select \"Product\" from the type dropdown"
+      },
+      {
+        "type": "action",
+        "description": "Type \"Test Product A\" into the name field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"A sample product description for UI testing.\" into the description field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"150000\" into the price field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Save\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Test Product A\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC041",
+    "title": "Add a new Service and verify it appears in the list",
+    "description": "Verifies a user can add a new service and see it listed after saving.",
+    "category": "Product & Service CRUD",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the username/email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/grapadistrategix/dashboard\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Product Service\" in the sidebar"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Tambah\" button"
+      },
+      {
+        "type": "action",
+        "description": "Select \"Service\" from the type dropdown"
+      },
+      {
+        "type": "action",
+        "description": "Type \"Test Service B\" into the name field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"A sample service description for UI testing.\" into the description field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"250000\" into the price field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Save\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Test Service B\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC042",
+    "title": "Validate required price field when creating a new item",
+    "description": "Verifies the form prevents saving when price is empty and shows a visible validation message.",
+    "category": "Product & Service CRUD",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the username/email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/grapadistrategix/dashboard\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Product Service\" in the sidebar"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Tambah\" button"
+      },
+      {
+        "type": "action",
+        "description": "Select \"Product\" from the type dropdown"
+      },
+      {
+        "type": "action",
+        "description": "Type \"Test Product No Price\" into the name field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"Attempt save without price.\" into the description field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Save\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"price is required\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC043",
+    "title": "Cancel add new item and verify it does not create a new list entry",
+    "description": "Verifies canceling out of the add form returns to the list without adding the new item.",
+    "category": "Product & Service CRUD",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the username/email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/grapadistrategix/dashboard\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Product Service\" in the sidebar"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Tambah\" button"
+      },
+      {
+        "type": "action",
+        "description": "Type \"Temp Item Should Not Save\" into the name field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Cancel\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Temp Item Should Not Save\" is not visible"
+      }
+    ]
+  },
+  {
+    "id": "TC044",
+    "title": "Validation: reject non-numeric price input",
+    "description": "Verifies the price field enforces numeric input and shows a visible error when invalid text is entered.",
+    "category": "Product & Service CRUD",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the username/email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/grapadistrategix/dashboard\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Product Service\" in the sidebar"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Tambah\" button"
+      },
+      {
+        "type": "action",
+        "description": "Select \"Product\" from the type dropdown"
+      },
+      {
+        "type": "action",
+        "description": "Type \"Invalid Price Product\" into the name field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"abc\" into the price field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Save\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Invalid price\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC045",
+    "title": "Add a new non-recurring transaction and see it reflected in list and cash flow summary",
+    "description": "Verifies a user can create a valid transaction and the UI updates the transaction list and cash flow summary.",
+    "category": "Financial Simulation",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the username/email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/grapadistrategix/dashboard\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Financial Simulation\" in the sidebar"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Cash Flow\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Add new transaction\" button"
+      }
+    ]
+  },
+  {
+    "id": "TC046",
+    "title": "Save a valid income transaction and confirm it appears in the transaction list",
+    "description": "Verifies saving a valid income transaction adds a new row/item in the transaction list.",
+    "category": "Financial Simulation",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the username/email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/grapadistrategix/dashboard\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Financial Simulation\" in the sidebar"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Add new transaction\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Save\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC047",
+    "title": "Create a transaction with recurring enabled and verify recurring setting is retained in the list/detail view",
+    "description": "Verifies enabling the recurring toggle during creation persists and is visible after saving.",
+    "category": "Financial Simulation",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the username/email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/grapadistrategix/dashboard\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Financial Simulation\" in the sidebar"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Add new transaction\" button"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Recurring\" toggle"
+      }
+    ]
+  },
+  {
+    "id": "TC048",
+    "title": "Validation: reject negative amount and prevent save",
+    "description": "Verifies the form shows a validation message for a negative amount and does not create a transaction.",
+    "category": "Financial Simulation",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the username/email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/grapadistrategix/dashboard\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Financial Simulation\" in the sidebar"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Add new transaction\" button"
+      },
+      {
+        "type": "action",
+        "description": "Type \"-10000\" into the amount field"
+      }
+    ]
+  },
+  {
+    "id": "TC049",
+    "title": "Validation: invalid or missing date blocks saving the transaction",
+    "description": "Verifies the form requires a valid date and shows an error when date is invalid or not provided.",
+    "category": "Financial Simulation",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the username/email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/grapadistrategix/dashboard\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Financial Simulation\" in the sidebar"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Add new transaction\" button"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Save\" button"
+      }
+    ]
+  },
+  {
+    "id": "TC050",
+    "title": "Filter by year updates the monthly comparison chart",
+    "description": "Verifies changing the year filter updates the visible monthly comparison data on the page.",
+    "category": "Financial Simulation",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the username/email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/grapadistrategix/dashboard\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Financial Simulation\" in the sidebar"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Monthly\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Select a different year from the year filter dropdown"
+      }
+    ]
+  },
+  {
+    "id": "TC051",
+    "title": "Cash flow summary is visible and shows both income and expense sections/labels",
+    "description": "Verifies the cash flow summary section renders with expected headings/labels for key metrics.",
+    "category": "Financial Simulation",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the username/email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/grapadistrategix/dashboard\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Financial Simulation\" in the sidebar"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Cash flow summary\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Income\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC052",
+    "title": "Attempt to save with missing required fields shows validation and stays on the form",
+    "description": "Verifies required fields (category, amount, date) enforce validation and the user is not returned to the list on failed save.",
+    "category": "Financial Simulation",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the username/email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/grapadistrategix/dashboard\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Financial Simulation\" in the sidebar"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Add new transaction\" button"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Save\" button"
+      }
+    ]
+  },
+  {
+    "id": "TC053",
+    "title": "Generate a financial summary from simulation data and view it in the list",
+    "description": "Verifies a logged-in user can generate a new financial summary from simulation data and see it appear in the summaries list.",
+    "category": "Financial Summary",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the username/email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/grapadistrategix/dashboard\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Financial Summary\" in the sidebar"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Generate summary from simulation data\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Confirm\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC054",
+    "title": "Confirm generation and verify monthly comparison charts are shown",
+    "description": "Verifies that confirming summary generation results in a visible new summary entry and monthly comparison charts.",
+    "category": "Financial Summary",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the username/email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "action",
+        "description": "Click \"Financial Summary\" in the sidebar"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Generate summary from simulation data\" button"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Confirm\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Monthly comparison charts\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC055",
+    "title": "View summaries list loads and is visible",
+    "description": "Verifies that the summaries list section renders for a logged-in user.",
+    "category": "Financial Summary",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the username/email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "action",
+        "description": "Click \"Financial Summary\" in the sidebar"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Summaries\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC056",
+    "title": "Filter summaries by year updates visible results",
+    "description": "Verifies the user can change the year filter and the page reflects the selected year context.",
+    "category": "Financial Summary",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the username/email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "action",
+        "description": "Click \"Financial Summary\" in the sidebar"
+      },
+      {
+        "type": "action",
+        "description": "Select the most recent available year from the year dropdown"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Year\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC057",
+    "title": "Filter summaries by month updates visible results",
+    "description": "Verifies the user can change the month filter and the page reflects the selected month context.",
+    "category": "Financial Summary",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the username/email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "action",
+        "description": "Click \"Financial Summary\" in the sidebar"
+      },
+      {
+        "type": "action",
+        "description": "Select a month option from the month dropdown"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Monthly comparison charts\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC058",
+    "title": "Cancel generation from confirmation dialog leaves list unchanged",
+    "description": "Verifies that canceling the generation confirmation closes the dialog and does not proceed to generate a new summary.",
+    "category": "Financial Summary",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the username/email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "action",
+        "description": "Click \"Financial Summary\" in the sidebar"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Generate summary from simulation data\" button"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Cancel\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Confirm\" is not visible"
+      }
+    ]
+  },
+  {
+    "id": "TC059",
+    "title": "Create multi-year forecast dataset and generate AI forecast results",
+    "description": "Verifies a user can create a forecast dataset with multiple years of data and successfully generate AI forecast charts and insights.",
+    "category": "AI Financial Forecast",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the username/email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/grapadistrategix/dashboard\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Forecast\" in the sidebar"
+      },
+      {
+        "type": "action",
+        "description": "Click \"Create forecast data\""
+      },
+      {
+        "type": "action",
+        "description": "Type \"2023\" into the Year field"
+      }
+    ]
+  },
+  {
+    "id": "TC060",
+    "title": "Generate AI forecast shows warning/error when only single-year data exists",
+    "description": "Verifies the system blocks or warns AI forecast generation when there is insufficient historical data (single year).",
+    "category": "AI Financial Forecast",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the username/email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/grapadistrategix/dashboard\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Forecast\" in the sidebar"
+      },
+      {
+        "type": "action",
+        "description": "Click \"Generate AI forecast\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"more historical data\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC061",
+    "title": "Create forecast data requires mandatory fields (validation)",
+    "description": "Verifies the Create forecast data form prevents saving when required fields are missing.",
+    "category": "AI Financial Forecast",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the username/email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/grapadistrategix/dashboard\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Forecast\" in the sidebar"
+      },
+      {
+        "type": "action",
+        "description": "Click \"Create forecast data\""
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Save\" button"
+      }
+    ]
+  },
+  {
+    "id": "TC062",
+    "title": "Forecast data list is visible after navigating to Forecast module",
+    "description": "Verifies the Forecast module opens and shows the forecast data list view.",
+    "category": "AI Financial Forecast",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the username/email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/grapadistrategix/dashboard\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Forecast\" in the sidebar"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Forecast\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Create forecast data\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC063",
+    "title": "Import forecast data from simulation creates or updates dataset for forecasting",
+    "description": "Verifies a user can import data from simulation into the forecast module and sees confirmation or imported data visible.",
+    "category": "AI Financial Forecast",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the username/email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/grapadistrategix/dashboard\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Forecast\" in the sidebar"
+      },
+      {
+        "type": "action",
+        "description": "Click \"Import data from simulation\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Import\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC064",
+    "title": "AI forecast results page displays charts and insights after generation",
+    "description": "Verifies that once forecast generation is triggered, the results view shows visible charts and insight text.",
+    "category": "AI Financial Forecast",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the username/email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/grapadistrategix/dashboard\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Forecast\" in the sidebar"
+      },
+      {
+        "type": "action",
+        "description": "Click \"Generate AI forecast results\""
+      },
+      {
+        "type": "action",
+        "description": "Wait for the results content to appear"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Insights\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC065",
+    "title": "Forecast generation failure displays visible error message",
+    "description": "Verifies that when forecast generation fails, the UI shows a visible error message instead of silently failing.",
+    "category": "AI Financial Forecast",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the username/email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/grapadistrategix/dashboard\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Forecast\" in the sidebar"
+      },
+      {
+        "type": "action",
+        "description": "Click \"Generate AI forecast\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Error\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC066",
+    "title": "Edit affiliate slug and see updated affiliate link",
+    "description": "Verifies an authenticated user can change the affiliate slug and the displayed affiliate link updates accordingly.",
+    "category": "Affiliate System",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the username/email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/grapadistrategix/dashboard\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Affiliate\" in the sidebar"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Edit slug\" button/link"
+      },
+      {
+        "type": "action",
+        "description": "Type \"new-slug-123\" into the slug field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Save\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"new-slug-123\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC067",
+    "title": "Cancel slug edit without saving keeps affiliate link unchanged",
+    "description": "Verifies canceling out of slug editing does not change the currently displayed affiliate link.",
+    "category": "Affiliate System",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the username/email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/grapadistrategix/dashboard\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Affiliate\" in the sidebar"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the affiliate link element is visible"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Edit slug\" button/link"
+      },
+      {
+        "type": "action",
+        "description": "Type \"temporary-slug-change\" into the slug field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Cancel\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"temporary-slug-change\" is not visible"
+      }
+    ]
+  },
+  {
+    "id": "TC068",
+    "title": "Slug validation: empty slug shows an error and does not update link",
+    "description": "Verifies the slug cannot be saved as empty and the user sees a visible validation error.",
+    "category": "Affiliate System",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the username/email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/grapadistrategix/dashboard\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Affiliate\" in the sidebar"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Edit slug\" button/link"
+      },
+      {
+        "type": "action",
+        "description": "Type \"\" into the slug field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Save\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"slug\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC069",
+    "title": "Toggle affiliate link active/inactive updates visible status",
+    "description": "Verifies the user can toggle the affiliate link state and a visible status indicator updates accordingly.",
+    "category": "Affiliate System",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the username/email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/grapadistrategix/dashboard\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Affiliate\" in the sidebar"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the affiliate link element is visible"
+      },
+      {
+        "type": "action",
+        "description": "Click the link active/inactive toggle control"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Inactive\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC070",
+    "title": "View affiliate statistics and commission history sections",
+    "description": "Verifies the affiliate page shows core statistics and a visible history section for commissions or referrals.",
+    "category": "Affiliate System",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the username/email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/grapadistrategix/dashboard\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Affiliate\" in the sidebar"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Commission\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Statistics\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"History\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC071",
+    "title": "Request withdrawal with valid details shows success and appears in history",
+    "description": "Verifies a user can submit a withdrawal request and see a success confirmation plus a new entry in withdrawal history.",
+    "category": "Affiliate System",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the username/email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/grapadistrategix/dashboard\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Affiliate\" in the sidebar"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Request withdrawal\" button"
+      },
+      {
+        "type": "action",
+        "description": "Type \"100000\" into the withdrawal amount field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"BCA\" into the bank name field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"1234567890\" into the account number field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"Test User\" into the account holder name field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Submit\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"success\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"100000\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC072",
+    "title": "Request withdrawal with balance below minimum shows insufficient balance error",
+    "description": "Verifies the user sees an error message when attempting to withdraw below the minimum/available balance constraint.",
+    "category": "Affiliate System",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the username/email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/grapadistrategix/dashboard\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Affiliate\" in the sidebar"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Request withdrawal\" button"
+      },
+      {
+        "type": "action",
+        "description": "Type \"1\" into the withdrawal amount field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Submit\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"insufficient\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC073",
+    "title": "Withdrawal form required fields: missing bank/account details shows validation error",
+    "description": "Verifies the withdrawal request cannot be submitted with missing required payout details and shows visible validation messaging.",
+    "category": "Affiliate System",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the username/email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/grapadistrategix/dashboard\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Affiliate\" in the sidebar"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Request withdrawal\" button"
+      },
+      {
+        "type": "action",
+        "description": "Type \"50000\" into the withdrawal amount field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Submit\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"required\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC074",
+    "title": "Cannot submit purchase until a package is selected",
+    "description": "Verifies the purchase CTA is blocked (or a validation message appears) when the user tries to proceed without selecting a package.",
+    "category": "Pro Subscription Payment",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the username/email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/grapadistrategix/dashboard\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Upgrade to Pro\""
+      },
+      {
+        "type": "action",
+        "description": "Choose the \"VA\" payment method"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Submit\" or \"Purchase\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Select package\" or \"Package is required\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC075",
+    "title": "Cannot submit purchase until a payment method is selected",
+    "description": "Verifies the purchase CTA is blocked (or a validation message appears) when the user tries to proceed without choosing VA or QRIS.",
+    "category": "Pro Subscription Payment",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the username/email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/grapadistrategix/dashboard\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Upgrade to Pro\""
+      },
+      {
+        "type": "action",
+        "description": "Select the \"Monthly\" package option"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Submit\" or \"Purchase\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Select payment method\" or \"Payment method is required\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC076",
+    "title": "View user profile details from dashboard",
+    "description": "Verifies an authenticated user can open the profile panel and see their profile information fields.",
+    "category": "User Profile",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the username/email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/grapadistrategix/dashboard\""
+      },
+      {
+        "type": "action",
+        "description": "Click profile icon in header"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Name\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Phone\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC077",
+    "title": "Edit profile and save updated name and phone",
+    "description": "Verifies a user can edit profile details and see the updated values after saving.",
+    "category": "User Profile",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the username/email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/grapadistrategix/dashboard\""
+      },
+      {
+        "type": "action",
+        "description": "Click profile icon in header"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Edit\" button"
+      },
+      {
+        "type": "action",
+        "description": "Type \"QA Updated Name\" into the name field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"628123456789\" into the phone field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Save\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"QA Updated Name\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"628123456789\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC078",
+    "title": "Upload a profile photo and save",
+    "description": "Verifies the profile photo upload control is present and saving shows an updated profile avatar/photo area.",
+    "category": "User Profile",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the username/email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/grapadistrategix/dashboard\""
+      },
+      {
+        "type": "action",
+        "description": "Click profile icon in header"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Edit\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Upload\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Profile Photo\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC079",
+    "title": "Phone format validation blocks save (not 628xxx)",
+    "description": "Verifies an invalid phone format shows a validation error and prevents saving.",
+    "category": "User Profile",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the username/email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/grapadistrategix/dashboard\""
+      },
+      {
+        "type": "action",
+        "description": "Click profile icon in header"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Edit\" button"
+      },
+      {
+        "type": "action",
+        "description": "Type \"08123456789\" into the phone field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Save\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"628\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"phone\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC080",
+    "title": "Cancel editing leaves profile details unchanged",
+    "description": "Verifies cancelling out of edit mode does not apply changes to the profile view.",
+    "category": "User Profile",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the username/email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/grapadistrategix/dashboard\"},{"
+      },
+      {
+        "type": "action",
+        "description": "Click profile icon in header"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Edit\" button"
+      },
+      {
+        "type": "action",
+        "description": "Type \"Name Not Saved\" into the name field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Cancel\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Name Not Saved\" is not visible"
+      }
+    ]
+  },
+  {
+    "id": "TC081",
+    "title": "Attempt to save with empty name shows validation error",
+    "description": "Verifies the profile edit form validates required name and displays an error when empty.",
+    "category": "User Profile",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the username/email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/grapadistrategix/dashboard\""
+      },
+      {
+        "type": "action",
+        "description": "Click profile icon in header"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Edit\" button"
+      },
+      {
+        "type": "action",
+        "description": "Type \"\" into the name field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Save\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Name\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"required\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC082",
+    "title": "Profile view shows role and username fields",
+    "description": "Verifies the profile view includes role and username in addition to name and phone.",
+    "category": "User Profile",
+    "priority": "Low",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the username/email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/grapadistrategix/dashboard\""
+      },
+      {
+        "type": "action",
+        "description": "Click profile icon in header"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Username\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Role\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC083",
+    "title": "Change password entry point is available from profile",
+    "description": "Verifies the user can access the change password option from the profile area.",
+    "category": "User Profile",
+    "priority": "Low",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the username/email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/grapadistrategix/dashboard\""
+      },
+      {
+        "type": "action",
+        "description": "Click profile icon in header"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Change Password\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC084",
+    "title": "Admin can access Admin Dashboard and view analytics cards and trend chart",
+    "description": "Verifies an admin user can log in, open the Admin Dashboard section, and see key analytics UI elements.",
+    "category": "Admin Dashboard & User Management",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the username field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/grapadistrategix/dashboard\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Admin Dashboard\" in the dashboard navigation"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Admin Dashboard\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a registration trend chart is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC085",
+    "title": "Admin can search users, open user details, and ban a user with confirmation",
+    "description": "Verifies the user management workflow: search, open details modal, change status to banned, and confirm the change is acknowledged.",
+    "category": "Admin Dashboard & User Management",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the username field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "action",
+        "description": "Click \"User Management\" in the dashboard navigation"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"User Management\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Type \"test\" into the user search field"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify at least one user result row is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC086",
+    "title": "Admin can open a user detail modal from search results",
+    "description": "Verifies that selecting a user from results opens a user detail modal with editable fields/actions visible.",
+    "category": "Admin Dashboard & User Management",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the username field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "action",
+        "description": "Click \"User Management\" in the dashboard navigation"
+      },
+      {
+        "type": "action",
+        "description": "Type \"a\" into the user search field"
+      },
+      {
+        "type": "action",
+        "description": "Click the first user result row"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"User Details\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC087",
+    "title": "Admin can change a user's status to Banned and see a success confirmation",
+    "description": "Verifies that banning a user from within the user detail modal produces visible confirmation feedback.",
+    "category": "Admin Dashboard & User Management",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the username field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "action",
+        "description": "Click \"User Management\" in the dashboard navigation"
+      },
+      {
+        "type": "action",
+        "description": "Type \"a\" into the user search field"
+      },
+      {
+        "type": "action",
+        "description": "Click the first user result row"
+      },
+      {
+        "type": "action",
+        "description": "Select \"Banned\" from the user status dropdown"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Save\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Status updated\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC088",
+    "title": "Admin self-demotion is prevented when attempting to remove own admin role",
+    "description": "Verifies the application blocks an admin from demoting their own role and shows a prevention error.",
+    "category": "Admin Dashboard & User Management",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the username field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "action",
+        "description": "Click \"User Management\" in the dashboard navigation"
+      },
+      {
+        "type": "action",
+        "description": "Type \"admin\" into the user search field"
+      },
+      {
+        "type": "action",
+        "description": "Click the user result row that shows username \"admin\""
+      },
+      {
+        "type": "action",
+        "description": "Select \"User\" from the role dropdown"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Save\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"You cannot change your own role\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC089",
+    "title": "Search with no matches shows an empty-state message",
+    "description": "Verifies user search gracefully handles no results and shows a visible empty-state indicator.",
+    "category": "Admin Dashboard & User Management",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the username field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "action",
+        "description": "Click \"User Management\" in the dashboard navigation"
+      },
+      {
+        "type": "action",
+        "description": "Type \"zzzz_no_such_user_12345\" into the user search field"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"No users found\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC090",
+    "title": "User Management supports sorting by a column and reflects reordered results",
+    "description": "Verifies clicking a sortable column header changes the visible ordering of user rows.",
+    "category": "Admin Dashboard & User Management",
+    "priority": "Low",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the username field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "action",
+        "description": "Click \"User Management\" in the dashboard navigation"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify at least two user result rows are visible"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Created\" column header to sort"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the first user row content has changed"
+      }
+    ]
+  },
+  {
+    "id": "TC091",
+    "title": "Canceling out of user detail modal does not apply changes",
+    "description": "Verifies closing the user detail modal without saving does not show an update confirmation.",
+    "category": "Admin Dashboard & User Management",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the username field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "action",
+        "description": "Click \"User Management\" in the dashboard navigation"
+      },
+      {
+        "type": "action",
+        "description": "Type \"a\" into the user search field"
+      },
+      {
+        "type": "action",
+        "description": "Click the first user result row"
+      },
+      {
+        "type": "action",
+        "description": "Select \"Banned\" from the user status dropdown"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Cancel\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Status updated\" is not visible"
+      }
+    ]
+  },
+  {
+    "id": "TC092",
+    "title": "Toggle to dark mode from dashboard header",
+    "description": "Verifies a logged-in user can switch the UI from light to dark using the header toggle.",
+    "category": "Dark Mode Toggle",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the username/email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/grapadistrategix/dashboard\""
+      },
+      {
+        "type": "action",
+        "description": "Click the sun/moon icon in the header"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the header shows the opposite theme icon (sun if dark mode is active, moon if light mode is active)"
+      }
+    ]
+  },
+  {
+    "id": "TC093",
+    "title": "Toggle to light mode after enabling dark mode",
+    "description": "Verifies the user can toggle back to light mode after switching to dark mode.",
+    "category": "Dark Mode Toggle",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the username/email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/grapadistrategix/dashboard\""
+      },
+      {
+        "type": "action",
+        "description": "Click the sun/moon icon in the header"
+      },
+      {
+        "type": "action",
+        "description": "Click the sun/moon icon in the header"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the header shows the opposite theme icon (sun if dark mode is active, moon if light mode is active)"
+      }
+    ]
+  },
+  {
+    "id": "TC094",
+    "title": "Theme stays consistent when navigating to another public page from dashboard",
+    "description": "Verifies the theme remains applied when moving from the authenticated dashboard to a public page via in-app navigation links.",
+    "category": "Dark Mode Toggle",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the username/email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/grapadistrategix/dashboard\""
+      },
+      {
+        "type": "action",
+        "description": "Click the sun/moon icon in the header"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"FAQ\" link in the site navigation"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/grapadistrategix/faq\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the header shows the same theme icon state as on the dashboard (indicating the theme carried over)"
+      }
+    ]
+  },
+  {
+    "id": "TC095",
+    "title": "Theme preference persists after logging out and logging back in (same browser)",
+    "description": "Verifies that the chosen theme is still applied after ending and restarting an authenticated session in the same browser.",
+    "category": "Dark Mode Toggle",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the username/email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/grapadistrategix/dashboard\""
+      },
+      {
+        "type": "action",
+        "description": "Click the sun/moon icon in the header"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Logout\" button or \"Sign out\" option in the header/menu"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/grapadistrategix/login\""
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the username/email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/grapadistrategix/dashboard\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the header shows the same theme icon state as before logout (indicating the preference persisted)"
+      }
+    ]
+  },
+  {
+    "id": "TC096",
+    "title": "Theme toggle is available and functional immediately on dashboard load",
+    "description": "Verifies the dashboard header renders the theme toggle and it can be used without additional navigation.",
+    "category": "Dark Mode Toggle",
+    "priority": "Low",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the username/email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/grapadistrategix/dashboard\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"sun/moon theme toggle icon\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Click the sun/moon icon in the header"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the header shows the opposite theme icon (sun if dark mode is active, moon if light mode is active)"
+      }
+    ]
+  },
+  {
+    "id": "TC097",
+    "title": "Landing page loads and shows hero section with CTAs",
+    "description": "Verifies the public landing page loads and the hero section with primary call-to-action buttons is visible.",
+    "category": "Public Landing Page",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Hero section\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Register\" CTA button is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Login\" CTA button is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC098",
+    "title": "Hero Register CTA redirects to Register page",
+    "description": "Verifies clicking the Register CTA from the landing page navigates to the registration route.",
+    "category": "Public Landing Page",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/"
+      },
+      {
+        "type": "action",
+        "description": "Click on the \"Register\" CTA button in the hero section"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/grapadistrategix/register\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Registration form\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC099",
+    "title": "Hero Login CTA redirects to Login page",
+    "description": "Verifies clicking the Login CTA from the landing page navigates to the login route.",
+    "category": "Public Landing Page",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/"
+      },
+      {
+        "type": "action",
+        "description": "Click on the \"Login\" CTA button in the hero section"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/grapadistrategix/login\""
+      }
+    ]
+  },
+  {
+    "id": "TC100",
+    "title": "Landing page displays feature highlights section",
+    "description": "Verifies the landing page includes the feature highlights section with visible content.",
+    "category": "Public Landing Page",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/"
+      },
+      {
+        "type": "action",
+        "description": "Scroll to \"Feature highlights\" section"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Feature highlights\" section is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Features\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC101",
+    "title": "Landing page displays pricing preview section",
+    "description": "Verifies the landing page includes a pricing preview with Free vs Pro information visible.",
+    "category": "Public Landing Page",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/"
+      },
+      {
+        "type": "action",
+        "description": "Scroll to \"Pricing\" section"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Pricing\" section is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Free\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Pro\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC102",
+    "title": "Landing page displays testimonials section",
+    "description": "Verifies the landing page includes a testimonials section with visible testimonial content.",
+    "category": "Public Landing Page",
+    "priority": "Low",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/"
+      },
+      {
+        "type": "action",
+        "description": "Scroll to \"Testimonials\" section"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Testimonials\" section is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Testimonials\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC103",
+    "title": "WhatsApp floating widget is visible on landing page",
+    "description": "Verifies the WhatsApp floating widget is present and visible for users on the landing page.",
+    "category": "Public Landing Page",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /grapadistrategix/"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"WhatsApp floating widget\" is visible"
+      }
+    ]
+  }
+]
