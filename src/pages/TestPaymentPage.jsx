@@ -132,6 +132,7 @@ function SingapaySection() {
 function FaspaySection() {
   const [form, setForm] = useState({
     amount: "1000",
+    prefix: "GRPD",
     customer_name: "Test User",
     customer_email: "test@example.com",
     customer_phone: "628123456789",
@@ -157,6 +158,7 @@ function FaspaySection() {
     try {
       const { data } = await axios.post(`${API_URL}/api/test/faspay/payment`, {
         amount: Number(form.amount),
+        prefix: form.prefix,
         customer_name: form.customer_name,
         customer_email: form.customer_email,
         customer_phone: form.customer_phone,
@@ -223,9 +225,14 @@ function FaspaySection() {
       <div className="bg-white dark:bg-gray-800 rounded-xl shadow p-5">
         <h2 className="font-semibold text-gray-700 dark:text-gray-200 mb-4">Buat Test Invoice Faspay</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
-          <Field label="Jumlah (Rp) — tidak ada batas minimum">
-            <input type="number" name="amount" value={form.amount} onChange={handleChange} min="1" required className={inputCls} />
-          </Field>
+          <div className="grid grid-cols-2 gap-4">
+            <Field label="Jumlah (Rp) — tidak ada batas minimum">
+              <input type="number" name="amount" value={form.amount} onChange={handleChange} min="1" required className={inputCls} />
+            </Field>
+            <Field label="Prefix Bill No">
+              <input type="text" name="prefix" value={form.prefix} onChange={handleChange} maxLength={8} placeholder="GRPD" className={inputCls} />
+            </Field>
+          </div>
           <div className="grid grid-cols-2 gap-4">
             <Field label="Nama Customer">
               <input type="text" name="customer_name" value={form.customer_name} onChange={handleChange} required className={inputCls} />
