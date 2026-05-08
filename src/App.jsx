@@ -19,6 +19,7 @@ import ArticlePublicList from "./pages/ArticlePublicList";
 import ArticlePublicDetail from "./pages/ArticlePublicDetail";
 
 import AffiliateLinkRedirect from "./components/Affiliate/AffiliateLinkRedirect";
+import TestPaymentPage from "./pages/TestPaymentPage";
 
 // Admin Layout
 import AdminLayout from "./components/AdminLayout/AdminLayout";
@@ -190,6 +191,9 @@ function AppContent() {
 
           {/* Payment Success/Callback Route */}
           <Route path="/payment/success" element={<PaymentSuccess isDarkMode={isDarkMode} />} />
+
+          {/* Test Payment Page (dev/debug only) */}
+          <Route path="/test-payment" element={<TestPaymentPage />} />
 
           {/* Affiliate Link Redirect */}
           <Route path="/affiliate/:slug" element={<AffiliateLinkRedirect />} />
