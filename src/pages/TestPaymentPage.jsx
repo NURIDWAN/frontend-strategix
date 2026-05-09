@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 
 const API_URL = import.meta.env.VITE_API_URL || "";
@@ -173,7 +173,6 @@ function FaspaySection() {
 
   const loadConfig = async () => {
     setConfigLoading(true);
-    setConfig(null);
     try {
       const { data } = await axios.get(`${API_URL}/api/test/faspay/config`);
       setConfig(data.data);
@@ -183,6 +182,11 @@ function FaspaySection() {
       setConfigLoading(false);
     }
   };
+
+  useEffect(() => {
+    loadConfig();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const checkStatus = async () => {
     if (!statusBillNo) return;
@@ -221,7 +225,30 @@ function FaspaySection() {
 
       {/* Form */}
       <div className="bg-white dark:bg-gray-800 rounded-xl shadow p-5">
-        <h2 className="font-semibold text-gray-700 dark:text-gray-200 mb-4">Buat Test Invoice Faspay</h2>
+        <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
+          <h2 className="font-semibold text-gray-700 dark:text-gray-200">Buat Test Invoice Faspay</h2>
+          <div className="flex flex-wrap gap-2 text-xs">
+            {config?.invoice_prefix && (
+              <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 rounded-md font-mono">
+                Prefix: <strong>{config.invoice_prefix}</strong>
+              </span>
+            )}
+            {config?.environment && (
+              <span className={`px-2 py-1 rounded-md font-mono uppercase ${
+                config.environment === "production"
+                  ? "bg-red-100 dark:bg-red-900/40 text-red-700 dark:text-red-300"
+                  : "bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300"
+              }`}>
+                {config.environment}
+              </span>
+            )}
+          </div>
+        </div>
+        {config?.invoice_prefix && (
+          <p className="text-xs text-gray-500 dark:text-gray-400 mb-3">
+            Bill No format: <code className="font-mono bg-gray-100 dark:bg-gray-900 px-1.5 py-0.5 rounded">{config.invoice_prefix}-XXXXXX-{`{timestamp}`}</code>
+          </p>
+        )}
         <form onSubmit={handleSubmit} className="space-y-4">
           <Field label="Jumlah (Rp) — tidak ada batas minimum">
             <input type="number" name="amount" value={form.amount} onChange={handleChange} min="1" required className={inputCls} />
